@@ -122,8 +122,7 @@ public class OAth2Request extends Activity {
                     Variables.oauth2_token_expires = Calendar.getInstance().getTime().getTime() + (object.getLong("expires_in") * 1000);
                     Variables.oauth2_token_expires_in = object.getLong("expires_in");
                     Variables.ForceSaveTokenData(OAth2Request.this);
-
-                    alert.setText(s);
+                    finishTask();
                 }
                 else
                 {
@@ -148,7 +147,13 @@ public class OAth2Request extends Activity {
         protected void onPostExecute(String s) {
         Variables.oauth2_token_expires = Calendar.getInstance().getTime().getTime() + Variables.oauth2_token_expires_in;
         Variables.ForceSaveTokenData(OAth2Request.this);
+        finishTask();
         }
+    }
+
+    private void finishTask()
+    {
+
     }
 
 }

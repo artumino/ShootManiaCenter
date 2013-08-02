@@ -24,6 +24,7 @@
         <activity android:name="com.artum.shootmaniacenter.ShowNews"/>
         <activity android:name="com.artum.shootmaniacenter.utilities.oauth2.OAth2Request"/>
         <activity android:name="com.artum.shootmaniacenter.LadderActivity"/>
+        <activity android:name=".ShowAccount"/>
     </application>
 
 </manifest>
