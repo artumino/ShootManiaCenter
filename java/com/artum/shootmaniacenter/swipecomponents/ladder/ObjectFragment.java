@@ -94,15 +94,31 @@ public class ObjectFragment extends Fragment {
             rankList.clear();
             NadeoDataSeeker seeker = new NadeoDataSeeker();
             jsonDecrypter decrypter = new jsonDecrypter();
-            HtmlFormatter formatter = new HtmlFormatter();
 
-            String test = seeker.getEliteLadder(0, 10);
-            if(test != "Nope" && LadderCacheManager.hasToUpdate(getActivity(), "elite_ladder"))
+            String test;
+
+            if(LadderCacheManager.hasToUpdate(getActivity(), "elite_ladder"))
             {
-                LadderCacheManager.saveToCache(getActivity(), "elite_ladder", test);
-                ladderStatus = decrypter.getRanksElementFromSegment(test, 10);
-                for (RankElement temp : ladderStatus)
-                    rankList.add(temp);
+                test = seeker.getEliteLadder(0, 10);
+                if(!test.equals("Nope"))
+                {
+                    LadderCacheManager.saveToCache(getActivity(), "elite_ladder", test);
+                    ladderStatus = decrypter.getRanksElementFromSegment(test, 10);
+                    for (RankElement temp : ladderStatus)
+                        rankList.add(temp);
+                }
+                else if((test = LadderCacheManager.loadFromCache(getActivity(), "elite_ladder")) != null)
+                {
+                    ladderStatus = decrypter.getRanksElementFromSegment(test, 10);
+                    for (RankElement temp : ladderStatus)
+                        rankList.add(temp);
+                }
+                else
+                {
+                    RankElement tempElement = new RankElement();
+                    tempElement.rank = -1;
+                    rankList.add(tempElement);
+                }
             }
             else
             {
@@ -137,15 +153,30 @@ public class ObjectFragment extends Fragment {
             rankList.clear();
             NadeoDataSeeker seeker = new NadeoDataSeeker();
             jsonDecrypter decrypter = new jsonDecrypter();
-            HtmlFormatter formatter = new HtmlFormatter();
 
-            String test = seeker.getStormLadder(0, 10);
-            if(test != "Nope" && LadderCacheManager.hasToUpdate(getActivity(), "storm_ladder"))
+            String test;
+            if(LadderCacheManager.hasToUpdate(getActivity(), "storm_ladder"))
             {
-                LadderCacheManager.saveToCache(getActivity(), "storm_ladder", test);
-                ladderStatus = decrypter.getRanksElementFromSegment(test, 10);
-                for (RankElement temp : ladderStatus)
-                    rankList.add(temp);
+                test = seeker.getStormLadder(0, 10);
+                if(!test.equals("Nope"))
+                {
+                    LadderCacheManager.saveToCache(getActivity(), "storm_ladder", test);
+                    ladderStatus = decrypter.getRanksElementFromSegment(test, 10);
+                    for (RankElement temp : ladderStatus)
+                        rankList.add(temp);
+                }
+                else if((test = LadderCacheManager.loadFromCache(getActivity(), "storm_ladder")) != null)
+                {
+                    ladderStatus = decrypter.getRanksElementFromSegment(test, 10);
+                    for (RankElement temp : ladderStatus)
+                        rankList.add(temp);
+                }
+                else
+                {
+                    RankElement tempElement = new RankElement();
+                    tempElement.rank = -1;
+                    rankList.add(tempElement);
+                }
             }
             else
             {
@@ -182,13 +213,29 @@ public class ObjectFragment extends Fragment {
             jsonDecrypter decrypter = new jsonDecrypter();
             HtmlFormatter formatter = new HtmlFormatter();
 
-            String test = seeker.getJoustLadder(0, 10);
-            if(test != "Nope" && LadderCacheManager.hasToUpdate(getActivity(), "joust_ladder"))
+            String test;
+            if(LadderCacheManager.hasToUpdate(getActivity(), "joust_ladder"))
             {
-                LadderCacheManager.saveToCache(getActivity(), "joust_ladder", test);
-                ladderStatus = decrypter.getRanksElementFromSegment(test, 10);
-                for (RankElement temp : ladderStatus)
-                    rankList.add(temp);
+                test = seeker.getJoustLadder(0, 10);
+                if(!test.equals("Nope"))
+                {
+                    LadderCacheManager.saveToCache(getActivity(), "joust_ladder", test);
+                    ladderStatus = decrypter.getRanksElementFromSegment(test, 10);
+                    for (RankElement temp : ladderStatus)
+                        rankList.add(temp);
+                }
+                else if((test = LadderCacheManager.loadFromCache(getActivity(), "joust_ladder")) != null)
+                {
+                    ladderStatus = decrypter.getRanksElementFromSegment(test, 10);
+                    for (RankElement temp : ladderStatus)
+                        rankList.add(temp);
+                }
+                else
+                {
+                    RankElement tempElement = new RankElement();
+                    tempElement.rank = -1;
+                    rankList.add(tempElement);
+                }
             }
             else
             {
@@ -217,3 +264,4 @@ public class ObjectFragment extends Fragment {
     }
 
 }
+
