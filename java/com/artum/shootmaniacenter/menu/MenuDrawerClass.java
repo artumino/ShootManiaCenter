@@ -43,7 +43,7 @@ public class MenuDrawerClass {
                         myIntent = new Intent(currentActivity.getApplication(), OAth2Request.class);
                         myIntent.putExtra("refresh", false);
                     }
-                    else if(true) //(Variables.oauth2_token_expires < Calendar.getInstance().getTime().getTime())
+                    else if(Variables.oauth2_token_expires < Calendar.getInstance().getTime().getTime())
                     {
                         myIntent = new Intent(currentActivity.getApplication(), OAth2Request.class);
                         myIntent.putExtra("refresh", true);
