@@ -92,50 +92,7 @@ public class ObjectFragment extends Fragment {
         @Override
         protected String doInBackground(String... params) {
             rankList.clear();
-            NadeoDataSeeker seeker = new NadeoDataSeeker();
-            jsonDecrypter decrypter = new jsonDecrypter();
-
-            String nadeoJsonString;
-
-            if(LadderCacheManager.hasToUpdate(getActivity(), "elite_ladder"))
-            {
-                nadeoJsonString = seeker.getEliteLadder(0, 10);
-                if(!nadeoJsonString.equals("Nope"))
-                {
-                    LadderCacheManager.saveToCache(getActivity(), "elite_ladder", nadeoJsonString);
-                    ladderStatus = decrypter.getRanksElementFromSegment(nadeoJsonString, 10);
-                    for (RankElement temp : ladderStatus)
-                        rankList.add(temp);
-                }
-                else if((nadeoJsonString = LadderCacheManager.loadFromCache(getActivity(), "elite_ladder")) != null)
-                {
-                    ladderStatus = decrypter.getRanksElementFromSegment(nadeoJsonString, 10);
-                    for (RankElement temp : ladderStatus)
-                        rankList.add(temp);
-                }
-                else
-                {
-                    RankElement tempElement = new RankElement();
-                    tempElement.rank = -1;
-                    rankList.add(tempElement);
-                }
-            }
-            else
-            {
-
-                if((nadeoJsonString = LadderCacheManager.loadFromCache(getActivity(), "elite_ladder")) != null)
-                {
-                    ladderStatus = decrypter.getRanksElementFromSegment(nadeoJsonString, 10);
-                    for (RankElement temp : ladderStatus)
-                        rankList.add(temp);
-                }
-                else
-                {
-                    RankElement tempElement = new RankElement();
-                    tempElement.rank = -1;
-                    rankList.add(tempElement);
-                }
-            }
+            setLadderList("elite_ladder");
             return null;
         }
 
@@ -151,49 +108,7 @@ public class ObjectFragment extends Fragment {
         @Override
         protected String doInBackground(String... params) {
             rankList.clear();
-            NadeoDataSeeker seeker = new NadeoDataSeeker();
-            jsonDecrypter decrypter = new jsonDecrypter();
-
-            String nadeoJsonString;
-            if(LadderCacheManager.hasToUpdate(getActivity(), "storm_ladder"))
-            {
-                nadeoJsonString = seeker.getStormLadder(0, 10);
-                if(!nadeoJsonString.equals("Nope"))
-                {
-                    LadderCacheManager.saveToCache(getActivity(), "storm_ladder", nadeoJsonString);
-                    ladderStatus = decrypter.getRanksElementFromSegment(nadeoJsonString, 10);
-                    for (RankElement temp : ladderStatus)
-                        rankList.add(temp);
-                }
-                else if((nadeoJsonString = LadderCacheManager.loadFromCache(getActivity(), "storm_ladder")) != null)
-                {
-                    ladderStatus = decrypter.getRanksElementFromSegment(nadeoJsonString, 10);
-                    for (RankElement temp : ladderStatus)
-                        rankList.add(temp);
-                }
-                else
-                {
-                    RankElement tempElement = new RankElement();
-                    tempElement.rank = -1;
-                    rankList.add(tempElement);
-                }
-            }
-            else
-            {
-
-                if((nadeoJsonString = LadderCacheManager.loadFromCache(getActivity(), "storm_ladder")) != null)
-                {
-                    ladderStatus = decrypter.getRanksElementFromSegment(nadeoJsonString, 10);
-                    for (RankElement temp : ladderStatus)
-                        rankList.add(temp);
-                }
-                else
-                {
-                    RankElement tempElement = new RankElement();
-                    tempElement.rank = -1;
-                    rankList.add(tempElement);
-                }
-            }
+            setLadderList("storm_ladder");
             return null;
         }
 
@@ -209,50 +124,7 @@ public class ObjectFragment extends Fragment {
         @Override
         protected String doInBackground(String... params) {
             rankList.clear();
-            NadeoDataSeeker seeker = new NadeoDataSeeker();
-            jsonDecrypter decrypter = new jsonDecrypter();
-            HtmlFormatter formatter = new HtmlFormatter();
-
-            String nadeoJsonString;
-            if(LadderCacheManager.hasToUpdate(getActivity(), "joust_ladder"))
-            {
-                nadeoJsonString = seeker.getJoustLadder(0, 10);
-                if(!nadeoJsonString.equals("Nope"))
-                {
-                    LadderCacheManager.saveToCache(getActivity(), "joust_ladder", nadeoJsonString);
-                    ladderStatus = decrypter.getRanksElementFromSegment(nadeoJsonString, 10);
-                    for (RankElement temp : ladderStatus)
-                        rankList.add(temp);
-                }
-                else if((nadeoJsonString = LadderCacheManager.loadFromCache(getActivity(), "joust_ladder")) != null)
-                {
-                    ladderStatus = decrypter.getRanksElementFromSegment(nadeoJsonString, 10);
-                    for (RankElement temp : ladderStatus)
-                        rankList.add(temp);
-                }
-                else
-                {
-                    RankElement tempElement = new RankElement();
-                    tempElement.rank = -1;
-                    rankList.add(tempElement);
-                }
-            }
-            else
-            {
-
-                if((nadeoJsonString = LadderCacheManager.loadFromCache(getActivity(), "joust_ladder")) != null)
-                {
-                    ladderStatus = decrypter.getRanksElementFromSegment(nadeoJsonString, 10);
-                    for (RankElement temp : ladderStatus)
-                        rankList.add(temp);
-                }
-                else
-                {
-                    RankElement tempElement = new RankElement();
-                    tempElement.rank = -1;
-                    rankList.add(tempElement);
-                }
-            }
+            setLadderList("joust_ladder");
             return null;
         }
 
@@ -260,6 +132,59 @@ public class ObjectFragment extends Fragment {
         protected void onPostExecute(String result) {
             list.setAdapter(adapter);
             list.setOnItemClickListener(ladderListener);
+        }
+    }
+
+    private void setLadderList(String title)
+    {
+        NadeoDataSeeker seeker = new NadeoDataSeeker();
+        jsonDecrypter decrypter = new jsonDecrypter();
+        String nadeoJsonString;
+
+        if(LadderCacheManager.hasToUpdate(getActivity(), title))
+        {
+            if(title.equals("elite_ladder"))
+                nadeoJsonString = seeker.getEliteLadder(0, 10);
+            else if(title.equals("storm_ladder"))
+                nadeoJsonString = seeker.getStormLadder(0, 10);
+            else
+                nadeoJsonString = seeker.getJoustLadder(0, 10);
+
+            if(!nadeoJsonString.equals("Nope"))
+            {
+                LadderCacheManager.saveToCache(getActivity(), title, nadeoJsonString);
+                ladderStatus = decrypter.getRanksElementFromSegment(nadeoJsonString, 10);
+                for (RankElement temp : ladderStatus)
+                    rankList.add(temp);
+            }
+            else if((nadeoJsonString = LadderCacheManager.loadFromCache(getActivity(), title)) != null)
+            {
+                ladderStatus = decrypter.getRanksElementFromSegment(nadeoJsonString, 10);
+                for (RankElement temp : ladderStatus)
+                    rankList.add(temp);
+            }
+            else
+            {
+                RankElement tempElement = new RankElement();
+                tempElement.rank = -1;
+                rankList.add(tempElement);
+            }
+        }
+        else
+        {
+
+            if((nadeoJsonString = LadderCacheManager.loadFromCache(getActivity(), title)) != null)
+            {
+                ladderStatus = decrypter.getRanksElementFromSegment(nadeoJsonString, 10);
+                for (RankElement temp : ladderStatus)
+                    rankList.add(temp);
+            }
+            else
+            {
+                RankElement tempElement = new RankElement();
+                tempElement.rank = -1;
+                rankList.add(tempElement);
+            }
         }
     }
 
