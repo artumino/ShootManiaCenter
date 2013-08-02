@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.artum.shootmaniacenter.R;
-import com.artum.shootmaniacenter.adapters.global.Variables;
+import com.artum.shootmaniacenter.global.Variables;
 
 /**
  * Created by jacop_000 on 04/06/13.

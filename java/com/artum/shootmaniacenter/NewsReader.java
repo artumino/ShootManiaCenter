@@ -18,7 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.artum.shootmaniacenter.adapters.feedsAdapter;
-import com.artum.shootmaniacenter.adapters.global.Variables;
+import com.artum.shootmaniacenter.global.Variables;
 import com.artum.shootmaniacenter.menu.MenuDrawerClass;
 import com.artum.shootmaniacenter.adapters.menuItemAdapter;
 import com.artum.shootmaniacenter.structures.RSS.FeedMessage;

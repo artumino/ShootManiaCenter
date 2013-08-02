@@ -1,6 +1,6 @@
 package com.artum.shootmaniacenter.utilities;
 
-import com.artum.shootmaniacenter.adapters.global.Variables;
+import com.artum.shootmaniacenter.global.Variables;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;

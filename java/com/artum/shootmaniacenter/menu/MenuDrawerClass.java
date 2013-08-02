@@ -7,7 +7,7 @@ import com.artum.shootmaniacenter.LadderActivity;
 import com.artum.shootmaniacenter.NewsReader;
 import com.artum.shootmaniacenter.utilities.oauth2.OAth2Request;
 import com.artum.shootmaniacenter.Settings;
-import com.artum.shootmaniacenter.adapters.global.Variables;
+import com.artum.shootmaniacenter.global.Variables;
 
 /**
  * Created by artum on 29/06/13.

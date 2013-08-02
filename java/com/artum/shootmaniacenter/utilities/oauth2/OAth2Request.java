@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.artum.shootmaniacenter.R;
-import com.artum.shootmaniacenter.adapters.global.Variables;
+import com.artum.shootmaniacenter.global.Variables;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,7 +74,7 @@ public class OAth2Request extends Activity {
         connectButton.setVisibility(View.INVISIBLE);
         browser.setVisibility(View.VISIBLE);
 
-        browser.loadUrl("https://ws.maniaplanet.com/oauth2/authorize/?client_id=" + api_username + "&redirect_uri=" + redirect_uri + "&scope=buddies teams dedicated titles&response_type=code");
+        browser.loadUrl("https://ws.maniaplanet.com/oauth2/authorize/?client_id=" + api_username + "&redirect_uri=" + redirect_uri + "&scope=buddies teams dedicated titles offline&response_type=code");
     }
 
     private class DontRedirect extends WebViewClient {
@@ -117,6 +117,7 @@ public class OAth2Request extends Activity {
                 if(object.getString("access_token") != null)
                 {
                     Variables.oauth2_token = object.getString("access_token");
+                    Variables.oauth2_refresh_token = object.getString("refresh_token");
                     Variables.oauth2_username = object.getString("login");
                     Variables.oauth2_token_expires = Calendar.getInstance().getTime().getTime() + (object.getLong("expires_in") * 1000);
                     Variables.ForceSaveTokenData(OAth2Request.this);

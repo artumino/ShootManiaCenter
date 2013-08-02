@@ -17,7 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
-import com.artum.shootmaniacenter.adapters.global.Variables;
+import com.artum.shootmaniacenter.global.Variables;
 import com.artum.shootmaniacenter.menu.MenuDrawerClass;
 import com.artum.shootmaniacenter.adapters.menuItemAdapter;
 import com.artum.shootmaniacenter.swipecomponents.ladder.CollectionPagerAdapter;

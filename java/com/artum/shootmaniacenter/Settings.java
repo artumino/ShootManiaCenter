@@ -18,7 +18,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.artum.shootmaniacenter.adapters.global.Variables;
+import com.artum.shootmaniacenter.global.Variables;
 import com.artum.shootmaniacenter.menu.MenuDrawerClass;
 import com.artum.shootmaniacenter.adapters.menuItemAdapter;
 
