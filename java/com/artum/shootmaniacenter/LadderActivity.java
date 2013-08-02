@@ -20,8 +20,8 @@ import android.widget.SearchView;
 import com.artum.shootmaniacenter.adapters.global.Variables;
 import com.artum.shootmaniacenter.menu.MenuDrawerClass;
 import com.artum.shootmaniacenter.adapters.menuItemAdapter;
-import com.artum.shootmaniacenter.ladder.CollectionPagerAdapter;
-import com.artum.shootmaniacenter.ladder.DepthPageTransformer;
+import com.artum.shootmaniacenter.swipecomponents.ladder.CollectionPagerAdapter;
+import com.artum.shootmaniacenter.swipecomponents.ladder.DepthPageTransformer;
 
 import java.net.URI;
 
