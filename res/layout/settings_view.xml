@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<!-- Contenuto della pagina -->
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#7d7d7d">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="API Account Infos:"
+                android:id="@+id/textView"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Username:"
+                android:id="@+id/textView2"
+                android:layout_marginLeft="12dp"
+                android:layout_below="@+id/textView"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="12dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Password:"
+                android:id="@+id/textView3"
+                android:layout_marginTop="21dp"
+                android:phoneNumber="false"
+                android:password="false"
+                android:layout_below="@+id/APIuserText"
+                android:layout_alignLeft="@+id/textView2"/>
+
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/APIuserText"
+                android:layout_below="@+id/textView"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/textView2"/>
+
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/APIpassText"
+                android:layout_alignBottom="@+id/textView3"
+                android:layout_alignRight="@+id/APIuserText"
+                android:layout_toRightOf="@+id/textView2"/>
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:id="@+id/saveSettings"
+                android:layout_alignParentBottom="true"
+                android:layout_alignRight="@+id/textView"
+                android:layout_toRightOf="@+id/resetSettings"/>
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reset"
+                android:id="@+id/resetSettings"
+                android:layout_alignParentBottom="true"
+                android:layout_alignLeft="@+id/textView"/>
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create API Account"
+                android:id="@+id/goToWebAPI"
+                android:layout_below="@+id/APIpassText"
+                android:layout_alignRight="@+id/APIpassText"
+                android:layout_marginRight="16dp"/>
+
+    <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Use Custom API Account for OAuth2"
+            android:id="@+id/checkBox"
+            android:layout_below="@+id/goToWebAPI"
+            android:layout_alignLeft="@+id/textView3"
+            android:layout_alignParentRight="true"
+            android:checked="false"/>
+
+</RelativeLayout>
+<!-- Contenuto barra di navigazione -->
+<ListView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/navigation_list"
+        android:layout_gravity="start"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:background="#666666"
+        android:scrollbars="none"
+        android:dividerHeight="8px"
+        android:paddingEnd="2dp"
+        android:paddingStart="2dp"
+        android:paddingTop="20dp"
+
+        />
+
+</android.support.v4.widget.DrawerLayout>

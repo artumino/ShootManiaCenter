@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/relativeLayout"
+                android:background="#444444">
+<ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_above="@+id/news_date"
+        android:scrollbars="none">
+<LinearLayout
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#444444">
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Title"
+            android:id="@+id/news_title"
+            android:layout_gravity="left|center_vertical"
+            android:autoText="false"
+            android:background="#999999"
+            android:gravity="center_vertical|center_horizontal"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            android:singleLine="true"/>
+
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Author"
+            android:id="@+id/news_author"
+            android:layout_gravity="left|center_vertical"
+            android:background="#777777"
+            android:gravity="right"
+            android:padding="2dp"
+            android:shadowColor="#000000"
+            android:singleLine="true"/>
+<WebView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/news_content"
+            android:clickable="true"
+            android:textAlignment="center"
+            android:isScrollContainer="false"
+            android:background="#444444"
+        />
+</LinearLayout>
+</ScrollView>
+<TextView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceSmall"
+    android:text="Date"
+    android:id="@+id/news_date"
+    android:gravity="center_vertical"
+    android:padding="2dp"
+    android:background="#777777"
+    android:singleLine="true"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentLeft="true"/>
+</RelativeLayout>

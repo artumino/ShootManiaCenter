@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="menu_items">
+        <item>"News"</item>
+        <item>"Ladders"</item>
+        <item>"Account"</item>
+        <!--<item>"Teams"</item>-->
+        <item>"Settings"</item>
+    </array>
+</resources>

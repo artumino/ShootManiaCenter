@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:background="#7d7d7d">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Nick"
+            android:id="@+id/playerNick" android:layout_alignTop="@+id/regionFlag"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_toRightOf="@+id/regionFlag" android:layout_alignParentRight="true"
+            android:paddingStart="5dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Login: "
+            android:id="@+id/textView" android:layout_below="@+id/playerNick"
+            android:layout_toRightOf="@+id/regionFlag" android:paddingStart="5dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Login"
+            android:id="@+id/playerLogin" android:layout_below="@+id/playerNick"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_toRightOf="@+id/textView"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Zone"
+            android:id="@+id/playerRegion" android:layout_alignBottom="@+id/regionFlag"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_toRightOf="@+id/regionFlag" android:paddingStart="5dp"/>
+    <ImageView
+            android:background="@drawable/image_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/regionFlag"
+            android:minHeight="100dp" android:minWidth="100dp" android:maxWidth="100dp" android:maxHeight="100dp"
+            android:src="@drawable/ic_launcher"
+            android:layout_alignParentTop="true" android:layout_alignParentLeft="true" android:layout_marginLeft="14dp"
+            android:layout_marginTop="14dp" android:scaleType="fitXY"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Elite:"
+            android:id="@+id/textView2"
+            android:layout_marginTop="21dp"
+            android:layout_below="@+id/playerRegion"
+            android:layout_alignLeft="@+id/regionFlag"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0LP"
+            android:id="@+id/elitepoints"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_below="@+id/textView2"
+            android:layout_alignLeft="@+id/textView2"
+            android:textColor="#dfcf0e"
+            android:textStyle="bold"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="#0000"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:id="@+id/eliterank"
+            android:textColor="#ffffff"
+            android:textStyle="bold|italic"
+            android:layout_alignTop="@+id/textView2"
+            android:singleLine="true"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/textView2"
+            android:gravity="right"
+            android:layout_weight="1.0"
+            android:paddingRight="5dp"
+            />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Storm:"
+            android:id="@+id/textView5"
+            android:layout_marginTop="11dp"
+            android:layout_below="@+id/elitepoints"
+            android:layout_alignLeft="@+id/elitepoints"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0LP"
+            android:id="@+id/stormpoints"
+            android:singleLine="true"
+            android:textColor="#dfcf0e"
+            android:textStyle="bold"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_below="@+id/textView5"
+            android:layout_alignLeft="@+id/textView5"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="#0000"
+            android:id="@+id/stormrank"
+            android:textColor="#ffffff"
+            android:textStyle="bold|italic"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_alignTop="@+id/textView5"
+            android:singleLine="true"
+            android:layout_toRightOf="@+id/textView5"
+            android:layout_alignParentRight="true"
+            android:gravity="right"
+            android:layout_weight="1.0"
+            android:paddingRight="5dp"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Joust:"
+            android:id="@+id/textView8"
+            android:layout_marginTop="14dp"
+            android:layout_below="@+id/stormpoints"
+            android:layout_alignLeft="@+id/stormpoints"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0LP"
+            android:id="@+id/joustpoints"
+            android:singleLine="true"
+            android:textColor="#dfcf0e"
+            android:textStyle="bold"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_below="@+id/textView8"
+            android:layout_alignLeft="@+id/textView8"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="#0000"
+            android:id="@+id/joustrank"
+            android:textColor="#ffffff"
+            android:textStyle="bold|italic"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_alignTop="@+id/textView8"
+            android:singleLine="true"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/textView8"
+            android:gravity="right"
+            android:layout_weight="1.0"
+            android:paddingRight="5dp"/>
+
+</RelativeLayout>
