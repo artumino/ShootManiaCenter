@@ -9,6 +9,8 @@ import com.artum.shootmaniacenter.utilities.oauth2.OAth2Request;
 import com.artum.shootmaniacenter.Settings;
 import com.artum.shootmaniacenter.global.Variables;
 
+import java.util.Calendar;
+
 /**
  * Created by artum on 29/06/13.
  *
@@ -36,20 +38,20 @@ public class MenuDrawerClass {
                     myIntent = new Intent(currentActivity.getApplication(), LadderActivity.class);
                     break;
                 case 2:                                                                                             //ACCOUNT
-                    /*if(Variables.oauth2_token == "")
+                    if(Variables.oauth2_token == "")
                     {
-                        */myIntent = new Intent(currentActivity.getApplication(), OAth2Request.class);
+                        myIntent = new Intent(currentActivity.getApplication(), OAth2Request.class);
                         myIntent.putExtra("refresh", false);
-                    /*}
-                    else if(Variables.oauth2_token_expires < Calendar.getInstance().getTime().getTime())
+                    }
+                    else if(true) //(Variables.oauth2_token_expires < Calendar.getInstance().getTime().getTime())
                     {
                         myIntent = new Intent(currentActivity.getApplication(), OAth2Request.class);
                         myIntent.putExtra("refresh", true);
-                    /*}
+                    }
                     else
                     {
 
-                    }*/
+                    }
                     break;
                 case 3:                                                                                             //SETTINGS
                     myIntent = new Intent(currentActivity.getApplication(), Settings.class);

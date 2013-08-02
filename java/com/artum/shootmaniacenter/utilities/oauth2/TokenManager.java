@@ -32,12 +32,12 @@ public class TokenManager {
         wr.writeBytes(params);
         wr.flush();
         wr.close();
-        //if(!refersh)
-        //{
+        if(!refersh)
+        {
             int temp;
             while((temp = connection.getInputStream().read()) != -1)
                 response += (char)temp;
-        //}
+        }
         connection.disconnect();
         } catch (MalformedURLException e) {
             e.printStackTrace();

@@ -20,6 +20,7 @@ public class Variables {
     public static  String oauth2_username = "";
     public static String oauth2_refresh_token = "";
     public static long oauth2_token_expires = -1;
+    public static long oauth2_token_expires_in = -1;
 
     public static void LoadVariables(Activity activity) //Chiamato dalla activity di start, carica tutte le variabili globali
     {
@@ -36,6 +37,7 @@ public class Variables {
         oauth2_username = preferences.getString("oauth2_username", "");
         oauth2_token_expires = preferences.getLong("oauth2_token_expires", -1);
         oauth2_refresh_token = preferences.getString("oauth2_refresh_token", "");
+        oauth2_token_expires_in = preferences.getLong("oauth2_token_expires_in", -1);
     }
 
     public static void ForceSaveTokenData(Activity activity)    //Salva le variabili relative al sistema OAuth2
@@ -47,6 +49,7 @@ public class Variables {
         editor.putString("oauth2_username", oauth2_username);
         editor.putLong("oauth2_token_expires", oauth2_token_expires);
         editor.putString("oauth2_refresh_token", oauth2_refresh_token);
+        editor.putLong("oauth2_token_expires_in", oauth2_token_expires_in);
         editor.apply();
     }
 

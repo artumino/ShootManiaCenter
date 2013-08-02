@@ -120,6 +120,7 @@ public class OAth2Request extends Activity {
                     Variables.oauth2_refresh_token = object.getString("refresh_token");
                     Variables.oauth2_username = object.getString("login");
                     Variables.oauth2_token_expires = Calendar.getInstance().getTime().getTime() + (object.getLong("expires_in") * 1000);
+                    Variables.oauth2_token_expires_in = object.getLong("expires_in");
                     Variables.ForceSaveTokenData(OAth2Request.this);
 
                     alert.setText(s);
@@ -140,13 +141,12 @@ public class OAth2Request extends Activity {
     {
         @Override
         protected String doInBackground(String... strings) {
-            return TokenManager.getTokenFromParams("https://ws.maniaplanet.com/oauth2/token/", "client_id=" + api_username + "&client_secret=" + api_secret + "grant_type=refresh_token&refresh_token=" + Variables.oauth2_token, true);
+            return TokenManager.getTokenFromParams("https://ws.maniaplanet.com/oauth2/token/", "client_id=" + api_username + "&client_secret=" + api_secret + "grant_type=refresh_token&refresh_token=" + Variables.oauth2_refresh_token, true);
         }
 
         @Override
         protected void onPostExecute(String s) {
-            Log.e("TOKENS", Variables.oauth2_token + "    !    " + s);
-        Variables.oauth2_token_expires = Calendar.getInstance().getTime().getTime() + 3600000;
+        Variables.oauth2_token_expires = Calendar.getInstance().getTime().getTime() + Variables.oauth2_token_expires_in;
         Variables.ForceSaveTokenData(OAth2Request.this);
         }
     }
