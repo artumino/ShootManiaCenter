@@ -145,7 +145,7 @@ public class OAth2Request extends Activity {
 
         @Override
         protected void onPostExecute(String s) {
-        Variables.oauth2_token_expires = Calendar.getInstance().getTime().getTime() + Variables.oauth2_token_expires_in;
+        Variables.oauth2_token_expires = Calendar.getInstance().getTime().getTime() + (Variables.oauth2_token_expires_in * 1000);
         Variables.ForceSaveTokenData(OAth2Request.this);
         finishTask();
         }
