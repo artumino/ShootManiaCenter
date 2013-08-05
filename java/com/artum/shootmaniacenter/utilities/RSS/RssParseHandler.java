@@ -1,5 +1,6 @@
 package com.artum.shootmaniacenter.utilities.RSS;
 
+import com.artum.shootmaniacenter.global.Variables;
 import com.artum.shootmaniacenter.structures.RSS.FeedMessage;
 
 import org.xml.sax.Attributes;
@@ -21,11 +22,6 @@ public class RssParseHandler extends DefaultHandler {
     // We have a local reference to an object which is constructed while parser is working on an item tag
     // Used to reference item while parsing
     private FeedMessage currentArticle;
-    // We have two indicators which are used to differentiate whether a tag title or link is being processed by the parser
-    // Parsing title indicator
-    private boolean parsingTitle;
-    // Parsing link indicator
-    private boolean parsingLink;
 
     public RssParseHandler() {
         articleList = new ArrayList();
@@ -48,6 +44,12 @@ public class RssParseHandler extends DefaultHandler {
     }
 
     public void endElement(String uri, String localName, String qName) throws SAXException {
+
+        if(localName.equalsIgnoreCase("lastBuildDate"))
+        {
+            Variables.news_lastUpdate = chars.toString();
+        }
+
         if (localName.equalsIgnoreCase("title")){
             currentArticle.setTitle(chars.toString());
         } else if (localName.equalsIgnoreCase("description")){

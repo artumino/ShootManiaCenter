@@ -124,6 +124,7 @@ public class NewsReader extends Activity {
                 xr.parse(new InputSource(url.openStream()));
 
                 setProgress(1);
+
                 return rh.getItems();
             }
             catch (IOException e) {
@@ -141,6 +142,7 @@ public class NewsReader extends Activity {
         protected void onPostExecute(List<FeedMessage> messages) {
             if(messages != null && messages.size() > 0)
             {
+                Variables.ForceSaveNewsDate(NewsReader.this);
                 for(FeedMessage message : messages)
                     feedMessages.add(message);
                 listView.setAdapter(mAdapter);

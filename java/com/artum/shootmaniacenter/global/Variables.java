@@ -16,6 +16,9 @@ public class Variables {
     public static String API_Username = "artum|ladderapp";
     public static String API_Password = "app14185";
     public static int menu_selected = 0;
+
+    public static String news_lastUpdate = "";
+
     public static String oauth2_token = "";
     public static  String oauth2_username = "";
     public static String oauth2_refresh_token = "";
@@ -38,6 +41,11 @@ public class Variables {
         oauth2_token_expires = preferences.getLong("oauth2_token_expires", -1);
         oauth2_refresh_token = preferences.getString("oauth2_refresh_token", "");
         oauth2_token_expires_in = preferences.getLong("oauth2_token_expires_in", -1);
+
+
+        preferences = activity.getSharedPreferences("News", Context.MODE_PRIVATE);
+
+        news_lastUpdate = preferences.getString("lastBuildDate", "");
     }
 
     public static void ForceSaveTokenData(Activity activity)    //Salva le variabili relative al sistema OAuth2
@@ -53,4 +61,12 @@ public class Variables {
         editor.apply();
     }
 
+    public static void ForceSaveNewsDate(Activity activity)
+    {
+        SharedPreferences preferences = activity.getSharedPreferences("News", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putString(news_lastUpdate, "lastBuildDate");
+        editor.apply();
+    }
 }
