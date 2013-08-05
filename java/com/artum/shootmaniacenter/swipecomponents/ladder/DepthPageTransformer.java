@@ -9,7 +9,7 @@ import android.view.View;
  *
  */
 public class DepthPageTransformer implements ViewPager.PageTransformer {
-    private static float MIN_SCALE = 0.75f;
+    private static float MIN_SCALE = 0.25f;
 
     public void transformPage(View view, float position) {
         int pageWidth = view.getWidth();
