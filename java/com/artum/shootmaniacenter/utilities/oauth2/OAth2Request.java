@@ -1,6 +1,7 @@
 package com.artum.shootmaniacenter.utilities.oauth2;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.artum.shootmaniacenter.R;
+import com.artum.shootmaniacenter.ShowAccount;
 import com.artum.shootmaniacenter.global.Variables;
 
 import org.json.JSONException;
@@ -153,6 +155,12 @@ public class OAth2Request extends Activity {
 
     private void finishTask()
     {
+        Intent myIntent = new Intent(getApplication(), ShowAccount.class);
+        if(myIntent != null)                                                                                    //Controlla che l'elemento selezionato corrisponda ad un'activity.
+        {
+            startActivity(myIntent);
+            this.finish();
+        }
 
     }
 

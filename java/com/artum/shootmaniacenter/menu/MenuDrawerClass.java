@@ -5,10 +5,12 @@ import android.content.Intent;
 
 import com.artum.shootmaniacenter.LadderActivity;
 import com.artum.shootmaniacenter.NewsReader;
+import com.artum.shootmaniacenter.ShowAccount;
 import com.artum.shootmaniacenter.utilities.oauth2.OAth2Request;
 import com.artum.shootmaniacenter.Settings;
 import com.artum.shootmaniacenter.global.Variables;
 
+import java.sql.Time;
 import java.util.Calendar;
 
 /**
@@ -50,7 +52,7 @@ public class MenuDrawerClass {
                     }
                     else
                     {
-
+                        myIntent = new Intent(currentActivity.getApplication(), ShowAccount.class);
                     }
                     break;
                 case 3:                                                                                             //SETTINGS

@@ -21,7 +21,7 @@ import com.artum.shootmaniacenter.global.Variables;
 import com.artum.shootmaniacenter.menu.MenuDrawerClass;
 import com.artum.shootmaniacenter.adapters.menuItemAdapter;
 import com.artum.shootmaniacenter.swipecomponents.ladder.CollectionPagerAdapter;
-import com.artum.shootmaniacenter.swipecomponents.ladder.DepthPageTransformer;
+import com.artum.shootmaniacenter.swipecomponents.DepthPageTransformer;
 
 import java.net.URI;
 

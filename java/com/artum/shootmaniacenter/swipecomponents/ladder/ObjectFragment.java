@@ -15,7 +15,6 @@ import com.artum.shootmaniacenter.R;
 import com.artum.shootmaniacenter.ShowPlayer;
 import com.artum.shootmaniacenter.adapters.ladderAdapter;
 import com.artum.shootmaniacenter.structures.nadeo.RankElement;
-import com.artum.shootmaniacenter.utilities.HtmlFormatter;
 import com.artum.shootmaniacenter.utilities.NadeoDataSeeker;
 import com.artum.shootmaniacenter.utilities.cache.LadderCacheManager;
 import com.artum.shootmaniacenter.utilities.jsonDecrypter;

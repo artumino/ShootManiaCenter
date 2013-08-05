@@ -1,4 +1,4 @@
-package com.artum.shootmaniacenter.swipecomponents.ladder;
+package com.artum.shootmaniacenter.swipecomponents;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;
