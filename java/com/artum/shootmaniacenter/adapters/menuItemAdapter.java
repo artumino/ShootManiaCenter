@@ -24,7 +24,7 @@ public class menuItemAdapter extends BaseAdapter{
     public menuItemAdapter(Activity a, String[] d) {
         activity = a;
         data=d;
-        inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = activity.getLayoutInflater();
     }
 
     @Override
@@ -47,6 +47,7 @@ public class menuItemAdapter extends BaseAdapter{
         View vi=convertView;
         if(convertView==null)
         {
+            inflater = activity.getLayoutInflater();
             if(position != Variables.menu_selected)
                 vi = inflater.inflate(R.layout.menu_item, null);
             else

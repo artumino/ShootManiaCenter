@@ -32,7 +32,7 @@ public class feedsAdapter extends BaseAdapter{
     public feedsAdapter(Activity a, ArrayList<FeedMessage> d) {
         activity = a;
         data=d;
-        inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = activity.getLayoutInflater();
     }
     @Override
     public int getCount() {
@@ -54,7 +54,11 @@ public class feedsAdapter extends BaseAdapter{
         View vi=convertView;
 
         if(convertView==null)
+        {
+
+            inflater = activity.getLayoutInflater();
             vi = inflater.inflate(R.layout.news_element, null);
+        }
 
         final Handler mHandler = new Handler();
         HtmlFormatter formatter = new HtmlFormatter();

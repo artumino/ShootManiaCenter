@@ -31,7 +31,7 @@ public class ladderAdapter extends BaseAdapter{
     public ladderAdapter(Activity a, ArrayList<RankElement> d) {
         activity = a;
         data=d;
-        inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = activity.getLayoutInflater();
     }
 
     @Override
@@ -53,7 +53,11 @@ public class ladderAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi=convertView;
         if(convertView==null)
+        {
+
+            inflater = activity.getLayoutInflater();
             vi = inflater.inflate(R.layout.ladder_view, null);
+        }
         HtmlFormatter formatter = new HtmlFormatter();
 
         TextView name = (TextView)vi.findViewById(R.id.name);       // Name
