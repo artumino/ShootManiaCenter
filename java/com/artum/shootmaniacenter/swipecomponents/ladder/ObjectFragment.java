@@ -144,11 +144,11 @@ public class ObjectFragment extends Fragment {
         if(LadderCacheManager.hasToUpdate(getActivity(), title))
         {
             if(title.equals("elite_ladder"))
-                nadeoJsonString = seeker.getEliteLadder(0, 10);
+                nadeoJsonString = seeker.getEliteLadder(0, 11);
             else if(title.equals("storm_ladder"))
-                nadeoJsonString = seeker.getStormLadder(0, 10);
+                nadeoJsonString = seeker.getStormLadder(0, 11);
             else
-                nadeoJsonString = seeker.getJoustLadder(0, 10);
+                nadeoJsonString = seeker.getJoustLadder(0, 11);
 
             if(!nadeoJsonString.equals("Nope"))
             {
