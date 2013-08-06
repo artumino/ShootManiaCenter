@@ -75,7 +75,7 @@ public class ladderAdapter extends BaseAdapter{
         {
             name.setText("Error retriving data from Nadeo...");
             name.setSelected(true);
-            rank.setText(rankItem.rank + " ");
+            rank.setText("-1 ");
             points.setText("0LP");
             region.setText("GG");
         }
