@@ -35,9 +35,14 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -194,17 +199,8 @@ public class NewsReader extends Activity {
 
         @Override
         protected List<FeedMessage> doInBackground(String... urls) {
-
-            /*for(int i = 0; i < feedMessages.size(); i++)
+            if(urls[0] != "cached")
             {
-                if(!isCancelled() && getFirstHTMLImage(feedMessages.get(i).getEncodedcontent()) != null)
-                {
-                    Bitmap bitmap = BufferBitmap.loadBitmap(getFirstHTMLImage(feedMessages.get(i).getEncodedcontent()));
-                    if(bitmap == null && getFirstHTMLImage(feedMessages.get(i).getDescription()) != null)
-                        bitmap = BufferBitmap.loadBitmap(getFirstHTMLImage(feedMessages.get(i).getDescription()));
-                    feedMessages.get(i).setImage(bitmap);
-                }
-            }*/
             JSONArray newsJson = new JSONArray();
 
             for(int i = 0; i < feedMessages.size(); i++)
@@ -217,12 +213,6 @@ public class NewsReader extends Activity {
                     feedMessages.get(i).setImage(bitmap);
 
                     JSONObject messageJson = new JSONObject();
-                    String imageByte = "";
-                    Log.e("Converting", feedMessages.get(i).getTitle());
-
-                    ByteBuffer byteBuffer = ByteBuffer.allocate(bitmap.getByteCount());
-                    bitmap.copyPixelsToBuffer(byteBuffer);
-                    Log.e("Converting to String", feedMessages.get(i).getTitle());
                     try {
                         Log.e("Creating JSON", feedMessages.get(i).getTitle());
                         messageJson.put("title", feedMessages.get(i).getTitle());
@@ -230,9 +220,7 @@ public class NewsReader extends Activity {
                         messageJson.put("author", feedMessages.get(i).getAuthor());
                         messageJson.put("content", feedMessages.get(i).getEncodedcontent());
                         messageJson.put("pubdate", feedMessages.get(i).getPubdate());
-                        //messageJson.put("link", feedMessages.get(i).getLink());
                         messageJson.put("guid", feedMessages.get(i).getGuid());
-                        messageJson.put("image", byteBuffer.array());
 
                         newsJson.put(messageJson);
                     } catch (JSONException e) {
@@ -241,44 +229,18 @@ public class NewsReader extends Activity {
                 }
             }
 
-            Log.e("Saving...", "Messages");
             NewsCacheManager.saveToCache(NewsReader.this, "news", newsJson.toString());
-
-            /*
-            JSONArray newsJson = new JSONArray();
-            for(FeedMessage message : feedMessages)
+            }
+            else
             {
-                JSONObject messageJson = new JSONObject();
-                String imageByte = "";
-                Bitmap temp = message.getImage();
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                Log.e("Converting", message.getTitle());
-                temp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                Log.e("Converting to String", message.getTitle());
-                for(byte b : stream.toByteArray())
+                for(int i = 0; i < feedMessages.size(); i++)
                 {
-                    imageByte += (char)b;
-                }
-                try {
-                    Log.e("Creating JSON", message.getTitle());
-                    messageJson.put("title", message.getTitle());
-                    messageJson.put("description", message.getDescription());
-                    messageJson.put("author", message.getAuthor());
-                    messageJson.put("content", message.getEncodedcontent());
-                    messageJson.put("pubdate", message.getPubdate());
-                    messageJson.put("link", message.getLink());
-                    messageJson.put("guid", message.getGuid());
-                    messageJson.put("image", imageByte);
-
-                    newsJson.put(messageJson);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    Bitmap bitmap = BufferBitmap.loadBitmap(getFirstHTMLImage(feedMessages.get(i).getEncodedcontent()));
+                    if(bitmap == null && getFirstHTMLImage(feedMessages.get(i).getDescription()) != null)
+                        bitmap = BufferBitmap.loadBitmap(getFirstHTMLImage(feedMessages.get(i).getDescription()));
+                    feedMessages.get(i).setImage(bitmap);
                 }
             }
-
-            Log.e("Saving...", "Messages");
-            NewsCacheManager.saveToCache(NewsReader.this, "news", newsJson.toString());
-            */
             return null;
         }
 
@@ -412,17 +374,18 @@ public class NewsReader extends Activity {
                     //news.setLink(message.getString("link"));
                     news.setGuid(message.getString("guid"));
 
-                    //ByteBuffer byteBuffer = ByteBuffer.wrap(message.getString("image").getBytes());
-
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(message.getString("image").getBytes(), 0, message.getString("image").getBytes().length);
-                    //bitmap.copyPixelsFromBuffer(byteBuffer);
-                    news.setImage(bitmap);
-
                     feedMessages.add(i, news);
                     listView.setAdapter(mAdapter);
 
 
                 }
+
+                //SHOOTMANIA OFFICIAL NEWS
+                if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB )
+                    new _getNewsFeedsImages().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "cached");
+                else
+                    new _getNewsFeedsImages().execute("cached");
+
                 return true;
             } catch (JSONException e) {
                 e.printStackTrace();
