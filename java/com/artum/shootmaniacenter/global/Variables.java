@@ -63,10 +63,10 @@ public class Variables {
 
     public static void ForceSaveNewsDate(Activity activity)
     {
-        SharedPreferences preferences = activity.getSharedPreferences("News", Context.MODE_PRIVATE);
+        SharedPreferences preferences = activity.getSharedPreferences("News_Cache", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 
-        editor.putString(news_lastUpdate, "lastBuildDate");
+        editor.putString("lastBuildDate", news_lastUpdate);
         editor.apply();
     }
 }

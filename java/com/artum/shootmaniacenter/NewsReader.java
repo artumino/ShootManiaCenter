@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,13 +26,20 @@ import com.artum.shootmaniacenter.structures.RSS.FeedMessage;
 import com.artum.shootmaniacenter.utilities.BufferBitmap;
 import com.artum.shootmaniacenter.utilities.NadeoDataSeeker;
 import com.artum.shootmaniacenter.utilities.RSS.RssParseHandler;
+import com.artum.shootmaniacenter.utilities.cache.NewsCacheManager;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -69,9 +77,9 @@ public class NewsReader extends Activity {
 
             //SHOOTMANIA OFFICIAL NEWS
         if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB )
-            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://blog.maniaplanet.com/blog/tag/shootmania-2/feed/");
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://blog.maniaplanet.com/blog/category/shootmania//feed/");
         else
-            task.execute("http://blog.maniaplanet.com/blog/tag/shootmania-2/feed/");
+            task.execute("http://blog.maniaplanet.com/blog/category/shootmania//feed/");
 
 
         /*
@@ -142,24 +150,42 @@ public class NewsReader extends Activity {
         protected void onPostExecute(List<FeedMessage> messages) {
             if(messages != null && messages.size() > 0)
             {
-                Variables.ForceSaveNewsDate(NewsReader.this);
-                for(FeedMessage message : messages)
-                    feedMessages.add(message);
-                listView.setAdapter(mAdapter);
+                if(NewsCacheManager.hasToUpdate(NewsReader.this))
+                {
+                    for(FeedMessage message : messages)
+                        feedMessages.add(message);
+                    listView.setAdapter(mAdapter);
 
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-                    taskImg.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+                        taskImg.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+                    else
+                        taskImg.execute("");
+                }
                 else
-                    taskImg.execute("");
+                {
+                    if(!showNewsFromCache())
+                    {
+                        FeedMessage error = new FeedMessage();
+                        error.setAuthor("artum");
+                        error.setTitle("Cannot Retrive News");
+                        error.setDescription("Errore retriving information from the news feed, check your connection!");
+                        feedMessages.add(error);
+                        listView.setAdapter(mAdapter);
+                    }
+
+               }
             }
             else
             {
-                FeedMessage error = new FeedMessage();
-                error.setAuthor("artum");
-                error.setTitle("Cannot Retrive News");
-                error.setDescription("Errore retriving information from the news feed, check your connection!");
-                feedMessages.add(error);
-                listView.setAdapter(mAdapter);
+                if(!showNewsFromCache())
+                {
+                    FeedMessage error = new FeedMessage();
+                    error.setAuthor("artum");
+                    error.setTitle("Cannot Retrive News");
+                    error.setDescription("Errore retriving information from the news feed, check your connection!");
+                    feedMessages.add(error);
+                    listView.setAdapter(mAdapter);
+                }
             }
     }
     }
@@ -168,7 +194,8 @@ public class NewsReader extends Activity {
 
         @Override
         protected List<FeedMessage> doInBackground(String... urls) {
-            for(int i = 0; i < feedMessages.size(); i++)
+
+            /*for(int i = 0; i < feedMessages.size(); i++)
             {
                 if(!isCancelled() && getFirstHTMLImage(feedMessages.get(i).getEncodedcontent()) != null)
                 {
@@ -177,7 +204,81 @@ public class NewsReader extends Activity {
                         bitmap = BufferBitmap.loadBitmap(getFirstHTMLImage(feedMessages.get(i).getDescription()));
                     feedMessages.get(i).setImage(bitmap);
                 }
+            }*/
+            JSONArray newsJson = new JSONArray();
+
+            for(int i = 0; i < feedMessages.size(); i++)
+            {
+                if(!isCancelled() && getFirstHTMLImage(feedMessages.get(i).getEncodedcontent()) != null)
+                {
+                    Bitmap bitmap = BufferBitmap.loadBitmap(getFirstHTMLImage(feedMessages.get(i).getEncodedcontent()));
+                    if(bitmap == null && getFirstHTMLImage(feedMessages.get(i).getDescription()) != null)
+                        bitmap = BufferBitmap.loadBitmap(getFirstHTMLImage(feedMessages.get(i).getDescription()));
+                    feedMessages.get(i).setImage(bitmap);
+
+                    JSONObject messageJson = new JSONObject();
+                    String imageByte = "";
+                    Log.e("Converting", feedMessages.get(i).getTitle());
+
+                    ByteBuffer byteBuffer = ByteBuffer.allocate(bitmap.getByteCount());
+                    bitmap.copyPixelsToBuffer(byteBuffer);
+                    Log.e("Converting to String", feedMessages.get(i).getTitle());
+                    try {
+                        Log.e("Creating JSON", feedMessages.get(i).getTitle());
+                        messageJson.put("title", feedMessages.get(i).getTitle());
+                        messageJson.put("description", feedMessages.get(i).getDescription());
+                        messageJson.put("author", feedMessages.get(i).getAuthor());
+                        messageJson.put("content", feedMessages.get(i).getEncodedcontent());
+                        messageJson.put("pubdate", feedMessages.get(i).getPubdate());
+                        //messageJson.put("link", feedMessages.get(i).getLink());
+                        messageJson.put("guid", feedMessages.get(i).getGuid());
+                        messageJson.put("image", byteBuffer.array());
+
+                        newsJson.put(messageJson);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
+
+            Log.e("Saving...", "Messages");
+            NewsCacheManager.saveToCache(NewsReader.this, "news", newsJson.toString());
+
+            /*
+            JSONArray newsJson = new JSONArray();
+            for(FeedMessage message : feedMessages)
+            {
+                JSONObject messageJson = new JSONObject();
+                String imageByte = "";
+                Bitmap temp = message.getImage();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                Log.e("Converting", message.getTitle());
+                temp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                Log.e("Converting to String", message.getTitle());
+                for(byte b : stream.toByteArray())
+                {
+                    imageByte += (char)b;
+                }
+                try {
+                    Log.e("Creating JSON", message.getTitle());
+                    messageJson.put("title", message.getTitle());
+                    messageJson.put("description", message.getDescription());
+                    messageJson.put("author", message.getAuthor());
+                    messageJson.put("content", message.getEncodedcontent());
+                    messageJson.put("pubdate", message.getPubdate());
+                    messageJson.put("link", message.getLink());
+                    messageJson.put("guid", message.getGuid());
+                    messageJson.put("image", imageByte);
+
+                    newsJson.put(messageJson);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            Log.e("Saving...", "Messages");
+            NewsCacheManager.saveToCache(NewsReader.this, "news", newsJson.toString());
+            */
             return null;
         }
 
@@ -290,5 +391,44 @@ public class NewsReader extends Activity {
         }
     }
     // </editor-fold>
+
+    private boolean showNewsFromCache()
+    {
+        String newsJson;
+        if((newsJson = NewsCacheManager.loadFromCache(NewsReader.this, "news")) != null)
+        {
+            try {
+                JSONArray messages = new JSONArray(newsJson);
+
+                for(int i = 0; i < messages.length(); i++)
+                {
+                    JSONObject message = messages.getJSONObject(i);
+                    FeedMessage news = new FeedMessage();
+                    news.setTitle(message.getString("title"));
+                    news.setDescription(message.getString("description"));
+                    news.setAuthor(message.getString("author"));
+                    news.setEncodedContent(message.getString("content"));
+                    news.setPubDate(message.getString("pubdate"));
+                    //news.setLink(message.getString("link"));
+                    news.setGuid(message.getString("guid"));
+
+                    //ByteBuffer byteBuffer = ByteBuffer.wrap(message.getString("image").getBytes());
+
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(message.getString("image").getBytes(), 0, message.getString("image").getBytes().length);
+                    //bitmap.copyPixelsFromBuffer(byteBuffer);
+                    news.setImage(bitmap);
+
+                    feedMessages.add(i, news);
+                    listView.setAdapter(mAdapter);
+
+
+                }
+                return true;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
 
 }
