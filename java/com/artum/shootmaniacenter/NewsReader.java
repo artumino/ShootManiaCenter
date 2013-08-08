@@ -157,6 +157,7 @@ public class NewsReader extends Activity {
             {
                 if(NewsCacheManager.hasToUpdate(NewsReader.this))
                 {
+                    BufferBitmap.ereaseBitmapCache();
                     for(FeedMessage message : messages)
                         feedMessages.add(message);
                     listView.setAdapter(mAdapter);
@@ -211,21 +212,21 @@ public class NewsReader extends Activity {
                     if(bitmap == null && getFirstHTMLImage(feedMessages.get(i).getDescription()) != null)
                         bitmap = BufferBitmap.loadBitmap(getFirstHTMLImage(feedMessages.get(i).getDescription()));
                     feedMessages.get(i).setImage(bitmap);
+                }
 
-                    JSONObject messageJson = new JSONObject();
-                    try {
-                        Log.e("Creating JSON", feedMessages.get(i).getTitle());
-                        messageJson.put("title", feedMessages.get(i).getTitle());
-                        messageJson.put("description", feedMessages.get(i).getDescription());
-                        messageJson.put("author", feedMessages.get(i).getAuthor());
-                        messageJson.put("content", feedMessages.get(i).getEncodedcontent());
-                        messageJson.put("pubdate", feedMessages.get(i).getPubdate());
-                        messageJson.put("guid", feedMessages.get(i).getGuid());
+                JSONObject messageJson = new JSONObject();
+                try {
+                    Log.e("Creating JSON", feedMessages.get(i).getTitle());
+                    messageJson.put("title", feedMessages.get(i).getTitle());
+                    messageJson.put("description", feedMessages.get(i).getDescription());
+                    messageJson.put("author", feedMessages.get(i).getAuthor());
+                    messageJson.put("content", feedMessages.get(i).getEncodedcontent());
+                    messageJson.put("pubdate", feedMessages.get(i).getPubdate());
+                    messageJson.put("guid", feedMessages.get(i).getGuid());
 
-                        newsJson.put(messageJson);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    newsJson.put(messageJson);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -235,10 +236,13 @@ public class NewsReader extends Activity {
             {
                 for(int i = 0; i < feedMessages.size(); i++)
                 {
-                    Bitmap bitmap = BufferBitmap.loadBitmap(getFirstHTMLImage(feedMessages.get(i).getEncodedcontent()));
-                    if(bitmap == null && getFirstHTMLImage(feedMessages.get(i).getDescription()) != null)
-                        bitmap = BufferBitmap.loadBitmap(getFirstHTMLImage(feedMessages.get(i).getDescription()));
-                    feedMessages.get(i).setImage(bitmap);
+                    if(!isCancelled() && getFirstHTMLImage(feedMessages.get(i).getEncodedcontent()) != null)
+                    {
+                        Bitmap bitmap = BufferBitmap.loadBitmap(getFirstHTMLImage(feedMessages.get(i).getEncodedcontent()));
+                        if(bitmap == null && getFirstHTMLImage(feedMessages.get(i).getDescription()) != null)
+                            bitmap = BufferBitmap.loadBitmap(getFirstHTMLImage(feedMessages.get(i).getDescription()));
+                        feedMessages.get(i).setImage(bitmap);
+                    }
                 }
             }
             return null;
@@ -360,10 +364,12 @@ public class NewsReader extends Activity {
         if((newsJson = NewsCacheManager.loadFromCache(NewsReader.this, "news")) != null)
         {
             try {
+
                 JSONArray messages = new JSONArray(newsJson);
 
                 for(int i = 0; i < messages.length(); i++)
                 {
+                    Log.e("NEWS", "Current: " + i);
                     JSONObject message = messages.getJSONObject(i);
                     FeedMessage news = new FeedMessage();
                     news.setTitle(message.getString("title"));
@@ -375,10 +381,10 @@ public class NewsReader extends Activity {
                     news.setGuid(message.getString("guid"));
 
                     feedMessages.add(i, news);
-                    listView.setAdapter(mAdapter);
 
 
                 }
+                listView.setAdapter(mAdapter);
 
                 //SHOOTMANIA OFFICIAL NEWS
                 if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB )

@@ -43,15 +43,12 @@ public class NewsCacheManager {
     static public boolean hasToUpdate(Activity activity){
         if(activity != null)
         {
-            Log.e("Data", "Start");
             SharedPreferences preferences = activity.getSharedPreferences("News_Cache", Context.MODE_PRIVATE);
             if(preferences.getString("lastBuildDate", null) != null && preferences.getString("news", null) != null)
             {
                 SimpleDateFormat sdf = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
-                Log.e("Data", "Check");
                 try {
                     Date lastUpdate = sdf.parse(preferences.getString("lastBuildDate", null));
-                    Log.e("Data", lastUpdate.toString());
                     Date lastBuildDate = sdf.parse(Variables.news_lastUpdate);
                     if(lastBuildDate.after(lastUpdate))
                         return true;

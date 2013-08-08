@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.artum.shootmaniacenter.R;
 import com.artum.shootmaniacenter.structures.RSS.FeedMessage;
+import com.artum.shootmaniacenter.utilities.DynamicImageView;
 import com.artum.shootmaniacenter.utilities.HtmlFormatter;
 
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class feedsAdapter extends BaseAdapter{
         TextView description = (TextView)vi.findViewById(R.id.feed_description);       // Description
         TextView author = (TextView)vi.findViewById(R.id.feed_author);                 // Author
         TextView date = (TextView)vi.findViewById(R.id.feed_date);                     // Date
-        ImageView imageView = (ImageView)vi.findViewById(R.id.feed_image);             // Image
+        DynamicImageView imageView = (DynamicImageView)vi.findViewById(R.id.feed_image);             // Image
 
 
         final FeedMessage feedMessage = data.get(position);
@@ -85,8 +86,6 @@ public class feedsAdapter extends BaseAdapter{
         author.setText(feedMessage.getAuthor());
         date.setText(feedMessage.getPubdate());
         imageView.setImageBitmap(feedMessage.getImage());
-        if(feedMessage.getImage() == null)
-            imageView.setMinimumHeight(0);
 
         return vi;
     }
