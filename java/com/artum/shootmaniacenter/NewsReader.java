@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -216,7 +215,6 @@ public class NewsReader extends Activity {
 
                 JSONObject messageJson = new JSONObject();
                 try {
-                    Log.e("Creating JSON", feedMessages.get(i).getTitle());
                     messageJson.put("title", feedMessages.get(i).getTitle());
                     messageJson.put("description", feedMessages.get(i).getDescription());
                     messageJson.put("author", feedMessages.get(i).getAuthor());
@@ -369,7 +367,6 @@ public class NewsReader extends Activity {
 
                 for(int i = 0; i < messages.length(); i++)
                 {
-                    Log.e("NEWS", "Current: " + i);
                     JSONObject message = messages.getJSONObject(i);
                     FeedMessage news = new FeedMessage();
                     news.setTitle(message.getString("title"));
