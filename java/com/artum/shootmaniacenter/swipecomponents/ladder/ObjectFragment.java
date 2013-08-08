@@ -1,5 +1,6 @@
 package com.artum.shootmaniacenter.swipecomponents.ladder;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import com.artum.shootmaniacenter.R;
 import com.artum.shootmaniacenter.ShowPlayer;
 import com.artum.shootmaniacenter.adapters.ladderAdapter;
+import com.artum.shootmaniacenter.global.Variables;
 import com.artum.shootmaniacenter.structures.nadeo.RankElement;
 import com.artum.shootmaniacenter.utilities.NadeoDataSeeker;
 import com.artum.shootmaniacenter.utilities.cache.LadderCacheManager;
@@ -77,12 +79,20 @@ public class ObjectFragment extends Fragment {
     AdapterView.OnItemClickListener ladderListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            if(ladderStatus != null)
+            if(ladderStatus != null && Variables.API_Username != "artum|ladderapp")
             {
                 RankElement selected = ladderStatus[i];
                 Intent myIntent = new Intent(getActivity(), ShowPlayer.class);
                 myIntent.putExtra("name", selected.playerData.login);
                 getActivity().startActivity(myIntent);
+            }
+            else
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Error");
+                builder.setMessage("In order to use this function you have to create a custom API Account in \"Settings\" table.");
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         }
     };

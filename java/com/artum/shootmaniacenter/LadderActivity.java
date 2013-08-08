@@ -102,7 +102,7 @@ public class LadderActivity extends FragmentActivity implements SearchView.OnQue
             {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Error");
-                builder.setMessage("In order to use this function you have to create a custom API Account in the in app \"Settings\" table.");
+                builder.setMessage("In order to use this function you have to create a custom API Account in \"Settings\" table.");
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }
