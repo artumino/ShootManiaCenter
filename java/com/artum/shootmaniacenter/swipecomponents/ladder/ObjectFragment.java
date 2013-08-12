@@ -102,7 +102,7 @@ public class ObjectFragment extends Fragment {
         @Override
         protected String doInBackground(String... params) {
             rankList.clear();
-            setLadderList("elite_ladder");
+            setLadderList("elite");
             return null;
         }
 
@@ -118,7 +118,7 @@ public class ObjectFragment extends Fragment {
         @Override
         protected String doInBackground(String... params) {
             rankList.clear();
-            setLadderList("storm_ladder");
+            setLadderList("storm");
             return null;
         }
 
@@ -134,7 +134,7 @@ public class ObjectFragment extends Fragment {
         @Override
         protected String doInBackground(String... params) {
             rankList.clear();
-            setLadderList("joust_ladder");
+            setLadderList("joust");
             return null;
         }
 
@@ -150,24 +150,21 @@ public class ObjectFragment extends Fragment {
         NadeoDataSeeker seeker = new NadeoDataSeeker();
         jsonDecrypter decrypter = new jsonDecrypter();
         String nadeoJsonString;
+        String cache_title = title + "_ladder";
 
-        if(LadderCacheManager.hasToUpdate(getActivity(), title))
+        if(LadderCacheManager.hasToUpdate(getActivity(), cache_title))
         {
-            if(title.equals("elite_ladder"))
-                nadeoJsonString = seeker.getEliteLadder(0, 11);
-            else if(title.equals("storm_ladder"))
-                nadeoJsonString = seeker.getStormLadder(0, 11);
-            else
-                nadeoJsonString = seeker.getJoustLadder(0, 11);
+
+            nadeoJsonString = seeker.getLadder(title , 0, 11);
 
             if(!nadeoJsonString.equals("Nope"))
             {
-                LadderCacheManager.saveToCache(getActivity(), title, nadeoJsonString);
+                LadderCacheManager.saveToCache(getActivity(), cache_title, nadeoJsonString);
                 ladderStatus = decrypter.getRanksElementFromSegment(nadeoJsonString, 10);
                 for (RankElement temp : ladderStatus)
                     rankList.add(temp);
             }
-            else if((nadeoJsonString = LadderCacheManager.loadFromCache(getActivity(), title)) != null)
+            else if((nadeoJsonString = LadderCacheManager.loadFromCache(getActivity(), cache_title)) != null)
             {
                 ladderStatus = decrypter.getRanksElementFromSegment(nadeoJsonString, 10);
                 for (RankElement temp : ladderStatus)
@@ -183,7 +180,7 @@ public class ObjectFragment extends Fragment {
         else
         {
 
-            if((nadeoJsonString = LadderCacheManager.loadFromCache(getActivity(), title)) != null)
+            if((nadeoJsonString = LadderCacheManager.loadFromCache(getActivity(), cache_title)) != null)
             {
                 ladderStatus = decrypter.getRanksElementFromSegment(nadeoJsonString, 10);
                 for (RankElement temp : ladderStatus)

@@ -23,44 +23,39 @@ import java.util.regex.Pattern;
  */
 public class NadeoDataSeeker {
 
-
-    public String getEliteLadder(int offset, int length)
+    public String getLadder(String title, int offset, int length)
     {
-        return getStringFromNadeo("http://ws.maniaplanet.com/elite/rankings/multiplayer/zone/?length=" + length + "&offset=" + offset);
-    }
-
-    public String getJoustLadder(int offset, int length)
-    {
-        return getStringFromNadeo("http://ws.maniaplanet.com/titles/rankings/multiplayer/zone/?title=SMStormJoust@nadeolabs&length=" + length + "&offset=" + offset);
-    }
-
-    public String getStormLadder(int offset, int length)
-    {
-        return getStringFromNadeo("http://ws.maniaplanet.com/storm/rankings/multiplayer/zone/?length=" + length + "&offset=" + offset);
+        if(title != "joust")
+            return getStringFromNadeo("http://ws.maniaplanet.com/" + title + "/rankings/multiplayer/zone/?length=" + length + "&offset=" + offset, true);
+        else
+            return getStringFromNadeo("http://ws.maniaplanet.com/titles/rankings/multiplayer/zone/?title=SMStormJoust@nadeolabs&length=" + length + "&offset=" + offset, true);
     }
 
     public String getPlayerInfo(String playerName)
     {
-        return getStringFromNadeo("http://ws.maniaplanet.com/players/" + playerName + "/");
+        return getStringFromNadeo("http://ws.maniaplanet.com/players/" + playerName + "/", true);
     }
 
     public String getPlayerRank(String title, String playerName)
     {
         if(title != "joust")
-            return getStringFromNadeo("http://ws.maniaplanet.com/"+ title + "/rankings/multiplayer/player/" + playerName + "/");
+            return getStringFromNadeo("http://ws.maniaplanet.com/"+ title + "/rankings/multiplayer/player/" + playerName + "/", true);
         else
-            return getStringFromNadeo("http://ws.maniaplanet.com/titles/rankings/multiplayer/player/" + playerName + "/?title=SMStormJoust@nadeolabs");
+            return getStringFromNadeo("http://ws.maniaplanet.com/titles/rankings/multiplayer/player/" + playerName + "/?title=SMStormJoust@nadeolabs", true);
     }
 
-    public String getStringFromNadeo(String URL)
+    public String getStringFromNadeo(String URL, boolean auth)
     {
         String responseString = null;
 
         HttpClient httpclient = new DefaultHttpClient();
         HttpResponse response = null;
         try {
-            Credentials creds = new UsernamePasswordCredentials(Variables.API_Username, Variables.API_Password);
-            ((AbstractHttpClient) httpclient).getCredentialsProvider().setCredentials(AuthScope.ANY, creds);
+            if(auth)
+            {
+                Credentials creds = new UsernamePasswordCredentials(Variables.API_Username, Variables.API_Password);
+                ((AbstractHttpClient) httpclient).getCredentialsProvider().setCredentials(AuthScope.ANY, creds);
+            }
 
             response = httpclient.execute(new HttpGet(URL));
             responseString = EntityUtils.toString(response.getEntity());
@@ -75,32 +70,9 @@ public class NadeoDataSeeker {
         return responseString;
     }
 
-    public String postStringToNadeo(String URL)
-    {
-        String responseString = null;
-
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpResponse response = null;
-        try {
-            Credentials creds = new UsernamePasswordCredentials("artum|ladderapp", "app14185");
-            ((AbstractHttpClient) httpclient).getCredentialsProvider().setCredentials(AuthScope.ANY, creds);
-
-            response = httpclient.execute(new HttpPost(URL));
-            responseString = EntityUtils.toString(response.getEntity());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if(responseString == null || responseString.charAt(0) != '{')
-            responseString = "Nope";
-
-        return responseString;
-    }
-
     public String zoneJpgURL (int zoneId)
     {
-        String segment = getStringFromNadeo("http://ws.maniaplanet.com/zones/id/" + zoneId + "/");
+        String segment = getStringFromNadeo("http://ws.maniaplanet.com/zones/id/" + zoneId + "/", true);
         String imgJPGURL = "null";
         Pattern pattern = Pattern.compile("\"iconJPGURL\":\"+(.+)\"");
         Matcher matcher = pattern.matcher(segment);
@@ -118,21 +90,6 @@ public class NadeoDataSeeker {
         return imgJPGURL;
     }
 
-    public String getNewsFeedXML(String URL)
-    {
-        String responseString = null;
 
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpResponse response = null;
-        try {
-            response = httpclient.execute(new HttpGet(URL));
-            responseString = EntityUtils.toString(response.getEntity());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return responseString;
-    }
 
 }
