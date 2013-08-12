@@ -11,6 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
@@ -42,6 +43,42 @@ public class NadeoDataSeeker {
             return getStringFromNadeo("http://ws.maniaplanet.com/"+ title + "/rankings/multiplayer/player/" + playerName + "/", true);
         else
             return getStringFromNadeo("http://ws.maniaplanet.com/titles/rankings/multiplayer/player/" + playerName + "/?title=SMStormJoust@nadeolabs", true);
+    }
+
+    public String getPlayer(String token)
+    {
+        return getStringFromOauth2("https://ws.maniaplanet.com/player/", false, token);
+    }
+
+    public String getTitles(String token)
+    {
+        return getStringFromOauth2("https://ws.maniaplanet.com/player/titles/installed/", false, token);
+    }
+
+    public String getStringFromOauth2(String URL, boolean auth, String token)
+    {
+        String responseString = null;
+
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpResponse response = null;
+        try {
+            if(auth)
+            {
+                Credentials creds = new UsernamePasswordCredentials(Variables.API_Username, Variables.API_Password);
+                ((AbstractHttpClient) httpclient).getCredentialsProvider().setCredentials(AuthScope.ANY, creds);
+            }
+            response.addHeader("Authorization" , "Bearer " + token);
+            response = httpclient.execute(new HttpGet(URL));
+            responseString = EntityUtils.toString(response.getEntity());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(responseString == null || responseString.charAt(0) != '{')
+            responseString = "Nope";
+
+        return responseString;
     }
 
     public String getStringFromNadeo(String URL, boolean auth)
