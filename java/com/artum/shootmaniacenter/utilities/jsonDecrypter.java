@@ -23,7 +23,7 @@ public class jsonDecrypter {
         {
         JSONObject mainSecgment = new JSONObject(segment);
         JSONArray jsonArray = mainSecgment.getJSONArray("players");
-            for (int i = 0; i < jsonArray.length(); i++)
+            for (int i = 0; i < lenght; i++)
             {
                 RankElement temp = new RankElement();
                 JSONObject data = jsonArray.getJSONObject(i);
