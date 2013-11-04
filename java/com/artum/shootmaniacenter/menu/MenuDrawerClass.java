@@ -1,6 +1,7 @@
 package com.artum.shootmaniacenter.menu;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 
 import com.artum.shootmaniacenter.LadderActivity;
@@ -40,7 +41,12 @@ public class MenuDrawerClass {
                     myIntent = new Intent(currentActivity.getApplication(), LadderActivity.class);
                     break;
                 case 2:                                                                                             //ACCOUNT
-                    if(Variables.oauth2_token == "")
+                    AlertDialog.Builder builder = new AlertDialog.Builder(currentActivity);
+                    builder.setTitle("Wait!");
+                    builder.setMessage("Work in progress...");
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                    /*if(Variables.oauth2_token == "")
                     {
                         myIntent = new Intent(currentActivity.getApplication(), OAth2Request.class);
                         myIntent.putExtra("refresh", false);
@@ -53,7 +59,7 @@ public class MenuDrawerClass {
                     else
                     {
                         myIntent = new Intent(currentActivity.getApplication(), ShowAccount.class);
-                    }
+                    }*/
                     break;
                 case 3:                                                                                             //SETTINGS
                     myIntent = new Intent(currentActivity.getApplication(), Settings.class);

@@ -240,10 +240,16 @@ public class NewsReader extends Activity {
                         if(bitmap == null && getFirstHTMLImage(feedMessages.get(i).getDescription()) != null)
                             bitmap = BufferBitmap.loadBitmap(getFirstHTMLImage(feedMessages.get(i).getDescription()));
                         feedMessages.get(i).setImage(bitmap);
+                        publishProgress();
                     }
                 }
             }
             return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            listView.invalidateViews();
         }
 
         @Override
@@ -263,6 +269,47 @@ public class NewsReader extends Activity {
                 return matcher.group(1);
         }
         return null;
+    }
+
+    private boolean showNewsFromCache()
+    {
+        String newsJson;
+        if((newsJson = NewsCacheManager.loadFromCache(NewsReader.this, "news")) != null)
+        {
+            try {
+
+                JSONArray messages = new JSONArray(newsJson);
+
+                for(int i = 0; i < messages.length(); i++)
+                {
+                    JSONObject message = messages.getJSONObject(i);
+                    FeedMessage news = new FeedMessage();
+                    news.setTitle(message.getString("title"));
+                    news.setDescription(message.getString("description"));
+                    news.setAuthor(message.getString("author"));
+                    news.setEncodedContent(message.getString("content"));
+                    news.setPubDate(message.getString("pubdate"));
+                    //news.setLink(message.getString("link"));
+                    news.setGuid(message.getString("guid"));
+
+                    feedMessages.add(i, news);
+
+
+                }
+                listView.setAdapter(mAdapter);
+
+                //SHOOTMANIA OFFICIAL NEWS
+                if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB )
+                    new _getNewsFeedsImages().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "cached");
+                else
+                    new _getNewsFeedsImages().execute("cached");
+
+                return true;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 
     // <editor-fold defaultstate="collapsed" desc="MENU DRAWER CODE">
@@ -356,45 +403,6 @@ public class NewsReader extends Activity {
     }
     // </editor-fold>
 
-    private boolean showNewsFromCache()
-    {
-        String newsJson;
-        if((newsJson = NewsCacheManager.loadFromCache(NewsReader.this, "news")) != null)
-        {
-            try {
 
-                JSONArray messages = new JSONArray(newsJson);
-
-                for(int i = 0; i < messages.length(); i++)
-                {
-                    JSONObject message = messages.getJSONObject(i);
-                    FeedMessage news = new FeedMessage();
-                    news.setTitle(message.getString("title"));
-                    news.setDescription(message.getString("description"));
-                    news.setAuthor(message.getString("author"));
-                    news.setEncodedContent(message.getString("content"));
-                    news.setPubDate(message.getString("pubdate"));
-                    //news.setLink(message.getString("link"));
-                    news.setGuid(message.getString("guid"));
-
-                    feedMessages.add(i, news);
-
-
-                }
-                listView.setAdapter(mAdapter);
-
-                //SHOOTMANIA OFFICIAL NEWS
-                if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB )
-                    new _getNewsFeedsImages().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "cached");
-                else
-                    new _getNewsFeedsImages().execute("cached");
-
-                return true;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return false;
-    }
 
 }

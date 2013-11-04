@@ -86,7 +86,7 @@
                 android:layout_alignRight="@+id/APIpassText"
                 android:layout_marginRight="16dp"/>
 
-    <CheckBox
+    <!--<CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Use Custom API Account for OAuth2"
@@ -94,7 +94,7 @@
             android:layout_below="@+id/goToWebAPI"
             android:layout_alignLeft="@+id/textView3"
             android:layout_alignParentRight="true"
-            android:checked="false"/>
+            android:checked="false"/>-->
 
 </RelativeLayout>
 <!-- Contenuto barra di navigazione -->
