@@ -59,7 +59,7 @@
             android:textColor="#888888"
             android:layout_below="@+id/feed_image"/>
 
-    <com.artum.shootmaniacenter.utilities.DynamicImageView
+    <com.libcorp.shootmaniacenter.utilities.DynamicImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/feed_image"
