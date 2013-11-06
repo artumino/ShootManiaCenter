@@ -45,19 +45,8 @@ public class BufferBitmap {
                 outputStream.close();
             }
             else
-            {
-                FileInputStream fileInputStream = new FileInputStream(file);
+                bitmap = BitmapFactory.decodeFile(file.getPath());
 
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                int b;
-                while((b = fileInputStream.read()) != -1)
-                {
-                    stream.write(b);
-                }
-                byte[] buffer = stream.toByteArray();
-
-                bitmap = BitmapFactory.decodeByteArray(buffer, 0, buffer.length);
-            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
