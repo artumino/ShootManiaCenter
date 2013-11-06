@@ -16,7 +16,7 @@ import java.net.URLConnection;
  */
 public class BufferBitmap {
 
-    static File dir = new File(Environment.getExternalStorageDirectory() + "/Android/data/com.artum.shootmaniacenter/files/cache");
+    static File dir = new File(Environment.getExternalStorageDirectory() + "/Android/data/com.libcorp.shootmaniacenter/files/cache");
 
     public static Bitmap loadBitmap(String strUrl) {
         Bitmap bitmap = null;
