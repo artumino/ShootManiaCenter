@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 
 /**
  * Created by artum on 20/05/13.
+ *
+ * Method to convert from Nadeo string format to HTML
  */
 public class HtmlFormatter {
 
