@@ -11,6 +11,8 @@ import java.net.URLConnection;
 
 /**
  * Created by artum on 24/05/13.
+ *
+ * Methods to read & cache Bitmap images
  */
 public class BufferBitmap {
 
@@ -26,20 +28,14 @@ public class BufferBitmap {
             if(!file.exists())
             {
                 URLConnection connection = url.openConnection();
-                connection.setUseCaches(true);
-                Object response = connection.getContent();
+                InputStream response = (InputStream)connection.getContent();
 
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                int b;
-                while((b = ((InputStream)response).read()) != -1)
-                {
-                    stream.write(b);
-                }
-                byte[] buffer = stream.toByteArray();
+                byte[] buffer = bufferedRead(response);
 
                 bitmap = BitmapFactory.decodeByteArray(buffer, 0, buffer.length);
 
                 file.createNewFile();
+
                 FileOutputStream outputStream = new FileOutputStream(file);
                 outputStream.write(buffer);
                 outputStream.close();
@@ -64,4 +60,20 @@ public class BufferBitmap {
             }
         }
     }
+
+    public static byte[] bufferedRead(InputStream is)
+            throws IOException
+    {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+        byte[] buffer = new byte[16384];
+        int bytesRead;
+        while ((bytesRead = is.read(buffer)) != -1)
+        {
+            stream.write(buffer, 0, bytesRead);
+        }
+
+        return stream.toByteArray();
+    }
+
 }
