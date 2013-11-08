@@ -46,8 +46,12 @@ public class LadderCacheManager {
                 SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy");
 
             try {
-                Date date = sdf.parse(preferences.getString("lastUpdate_" + param, null));
-                if(new Date(Calendar.getInstance().getTime().getTime() - date.getTime()).getHours() > 24)
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(sdf.parse(preferences.getString("lastUpdate_" + param, null)));
+                calendar.add(Calendar.DATE, 1);
+
+                if(Calendar.getInstance().getTime().after(calendar.getTime()))
                     return true;
                 else
                     return false;
