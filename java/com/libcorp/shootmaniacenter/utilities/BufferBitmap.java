@@ -18,6 +18,9 @@ public class BufferBitmap {
 
     static File dir = new File(Environment.getExternalStorageDirectory() + "/Android/data/com.libcorp.shootmaniacenter/files/cache");
 
+    //
+    // Download missing images from the web (and cache them) or Load saved images
+    //
     public static Bitmap loadBitmap(String strUrl) {
         Bitmap bitmap = null;
         String fileName = strUrl.substring( strUrl.lastIndexOf('/')+1, strUrl.length() );
@@ -51,6 +54,9 @@ public class BufferBitmap {
         return bitmap;
     }
 
+    //
+    // Erease images cache (Called on each news updates)
+    //
     public static void ereaseBitmapCache()
     {
         if (dir.isDirectory()) {
@@ -61,6 +67,10 @@ public class BufferBitmap {
         }
     }
 
+    //
+    // Simple method to convert an InputStream to byte[]
+    // It reads 16KB blocks at time
+    //
     public static byte[] bufferedRead(InputStream is)
             throws IOException
     {

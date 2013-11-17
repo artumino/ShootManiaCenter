@@ -114,17 +114,6 @@ public class Settings extends Activity {
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         mDrawerList = (ListView)findViewById(R.id.navigation_list);
 
-        ViewGroup.LayoutParams params= mDrawerList.getLayoutParams();
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        double inches = Math.sqrt((metrics.widthPixels*metrics.widthPixels) + (metrics.heightPixels*metrics.heightPixels)) / metrics.densityDpi;
-
-        if(inches > 5)
-            params.width= (metrics.widthPixels / 100) * 50;
-        else
-            params.width = metrics.widthPixels;
-        mDrawerList.setLayoutParams(params);
-
         mDrawerToggle = new ActionBarDrawerToggle(this,
                 mDrawerLayout,
                 R.drawable.ic_drawer,

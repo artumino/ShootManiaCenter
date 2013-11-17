@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
@@ -74,6 +75,9 @@ public class ShowPlayer extends Activity {
         _getInfos();
     }
 
+    //
+    // Returns to Home if ActionBar Icon is Pressed
+    //
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         int itemId = item.getItemId();
@@ -87,6 +91,9 @@ public class ShowPlayer extends Activity {
         return true;
     }
 
+    //
+    // Thread that seek player infos from nadeo's servers (NEEDS A REWORK)
+    //
     private void _getInfos()
     {
         new Thread(new Runnable() {
@@ -214,15 +221,7 @@ public class ShowPlayer extends Activity {
                                 playerRegion.setText(unicodeInterpreter.resolveString(data.region));
 
 
-                                playerLogin.setSelected(true);
-                                playerRegion.setSelected(true);
-                                playerNick.setSelected(true);
-                                elitePointsText.setSelected(true);
-                                eliteRankText.setSelected(true);
-                                stormRankText.setSelected(true);
-                                stormPointsText.setSelected(true);
-                                joustPointsText.setSelected(true);
-                                joustRankText.setSelected(true);
+                                SelectAllItems();
 
                             }
                         });
@@ -254,13 +253,28 @@ public class ShowPlayer extends Activity {
                             playerLogin.setText(data.login);
                             playerRegion.setText(unicodeInterpreter.resolveString(data.region));
 
-                            playerLogin.setSelected(true);
-                            playerRegion.setSelected(true);
-                            playerNick.setSelected(true);
+                            SelectAllItems();
                         }
                     });
                 }
             }
         }).start();
     }
+
+    //
+    // Selects all items (used for marquee)
+    //
+    private void SelectAllItems()
+    {
+        playerLogin.setSelected(true);
+        playerRegion.setSelected(true);
+        playerNick.setSelected(true);
+        elitePointsText.setSelected(true);
+        eliteRankText.setSelected(true);
+        stormRankText.setSelected(true);
+        stormPointsText.setSelected(true);
+        joustPointsText.setSelected(true);
+        joustRankText.setSelected(true);
+    }
+
 }
