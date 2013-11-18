@@ -60,7 +60,7 @@
             android:layout_below="@+id/feed_image"/>
 
     <com.libcorp.shootmaniacenter.utilities.DynamicImageView
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/feed_image"
             android:minHeight="50dp"
@@ -69,7 +69,6 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/feed_author"
             android:layout_alignParentRight="true"
-            android:maxWidth="@dimen/activity_horizontal_margin"
             android:padding="5dp"/>
 
 </RelativeLayout>

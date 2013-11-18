@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.libcorp.shootmaniacenter.R;
@@ -62,11 +63,11 @@ public class feedsAdapter extends BaseAdapter{
         final Handler mHandler = new Handler();
         HtmlFormatter formatter = new HtmlFormatter();
 
-        TextView title = (TextView)vi.findViewById(R.id.feed_title);                   // Title
-        TextView description = (TextView)vi.findViewById(R.id.feed_description);       // Description
-        TextView author = (TextView)vi.findViewById(R.id.feed_author);                 // Author
-        TextView date = (TextView)vi.findViewById(R.id.feed_date);                     // Date
-        DynamicImageView imageView = (DynamicImageView)vi.findViewById(R.id.feed_image);             // Image
+        TextView title = (TextView)vi.findViewById(R.id.feed_title);                        // Title
+        TextView description = (TextView)vi.findViewById(R.id.feed_description);            // Description
+        TextView author = (TextView)vi.findViewById(R.id.feed_author);                      // Author
+        TextView date = (TextView)vi.findViewById(R.id.feed_date);                          // Date
+        DynamicImageView imageView = (DynamicImageView)vi.findViewById(R.id.feed_image);    // Image
 
 
         final FeedMessage feedMessage = data.get(position);
