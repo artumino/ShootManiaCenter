@@ -74,9 +74,9 @@ public class NewsReader extends Activity {
 
             //SHOOTMANIA OFFICIAL NEWS
         if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB )
-            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://blog.maniaplanet.com/blog/tag/shootmania-2/feed/");
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://blog.maniaplanet.com/feed/?cat=shootmania%2Cmaniaplanet&tag=shootmania%2Celite%2Ccommunity");
         else
-            task.execute("http://blog.maniaplanet.com/blog/tag/shootmania-2/feed/");
+            task.execute("http://blog.maniaplanet.com/feed/?cat=shootmania%2Cmaniaplanet&tag=shootmania%2Celite%2Ccommunity");
 
 
         /*
